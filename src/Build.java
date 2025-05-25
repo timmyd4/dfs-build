@@ -19,12 +19,26 @@ public class Build {
     printSHortWordsHelper(set, k, vertex);
   }
 
-  public static void printSHortWordsHelper(Set<Vertex<String>> current, int amount, Vertex<String> vertex)
+  public static void printSHortWordsHelper(Set<Vertex<String>> current, int k, Vertex<String> vertex)
   {
-    if(current == null || current.contains(amount))
+    if(vertex == null || current.contains(vertex))
     {
-
+      return;
     }
+
+    current.add(vertex);
+
+    String name = vertex.data;
+    if(name.length() < k)
+    {
+      System.out.println(name);
+    }
+
+    for(Vertex<String> item : vertex.neighbors)
+    {
+      printSHortWordsHelper(current, k, item);
+    }
+
   }
 
   /**
