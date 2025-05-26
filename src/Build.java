@@ -1,3 +1,4 @@
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -161,9 +162,24 @@ public class Build {
    */
   public static <T> Set<T> unreachable(Map<T, List<T>> graph, T starting) {
     Set<T> set = new HashSet<>();
-    
-      
-    return new HashSet<>();
+    unreachableHelper(starting, graph, set);
+
+    Set<T> unreachable = new HashSet<>(graph.keySet());
+    unreachable.removeAll(set);
+
+    return unreachable;
+  }
+
+  public static <T> void unreachableHelper(T current, Map<T, List<T>> graph, Set<T> visted)
+  {
+    if(current == null || visted.contains(current)) return;
+
+    visted.add(current);
+
+    for(T item: graph.getOrDefault(current, Collections.emptyList()))
+    {
+      unreachableHelper(item, graph, visted);
+    }
   }
 
 }
